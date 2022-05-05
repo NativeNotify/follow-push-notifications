@@ -14,7 +14,7 @@ export default function GlobalFooter({ navigation, AppState }) {
                 color={"#141414"} 
                 onPress={() => navigation.navigate('Home')} 
             />
-            <Text>{chosenIndieID} - {followCount ? followCount : null}</Text>
+            <Text>{chosenIndieID} - {followCount >= 0 ? followCount : null}</Text>
             <Icon 
                 name={'user'} 
                 size={27} 

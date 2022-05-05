@@ -1,36 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { registerIndieID, registerFollowMasterID, getFollowMaster } from 'native-notify';
 
 import Footer from '../../Footers/GlobalFooter';
 
 export default function Login({ navigation, AppState }) {
-    const { indieIDs, chosenIndieID, setChosenIndieID, setFollowCount } = AppState;
+    const { 
+        indieIDs, 
+        chosenIndieID, 
+        setChosenIndieID, 
+        setFollowers, 
+        setFollowCount, 
+        setFollowing } = AppState;
     
     useEffect(() => {
         if(chosenIndieID) {
-            getFollowCount();
+            getFollowMasterInfo();
         }
     }, [chosenIndieID])
 
     const handleLogin = async (index) => {
-        registerIndieID(`${indieIDs[index]}`, 2594, 'dUuUQOZtCvfWUCDrvQCSZa');
-        let regFolMasID = await registerFollowMasterID(`${indieIDs[index]}`, 2594, 'dUuUQOZtCvfWUCDrvQCSZa');
+        registerIndieID(`${indieIDs[index]}`, your-app-id, 'your-app-token');
+
+        let regFolMasID = await registerFollowMasterID(`${indieIDs[index]}`, your-app-id, 'your-app-token');
         console.log('regFolMasID: ', regFolMasID);
 
         setChosenIndieID(indieIDs[index]);
     }
 
-    const getFollowCount = async () => {
+    const getFollowMasterInfo = async () => {
         console.log('chosenIndieID: ', chosenIndieID);
         let followMasterData = await getFollowMaster(
             `${chosenIndieID}`,
-            2594,
-            'dUuUQOZtCvfWUCDrvQCSZa'
+            your-app-id,
+            'your-app-token'
         );
 
         console.log("followMasterData: ", followMasterData);
+        setFollowers(followMasterData.follower_indie_ids);
         setFollowCount(followMasterData.follower_count);
+        setFollowing(followMasterData.following_indie_ids);
     }
 
     return (

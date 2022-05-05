@@ -20,6 +20,8 @@ export default function AppNavigation({ AppState }) {
                     {props => <Login {...props} AppState={AppState} />}
                 </Stack.Screen>
 
+                {/* create new screen to see who you're following and who is following you */}
+
             </Stack.Navigator>
         </NavigationContainer>
     )
